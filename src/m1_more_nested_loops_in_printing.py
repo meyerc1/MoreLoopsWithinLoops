@@ -360,12 +360,14 @@ def numbers_increasing_forward(r, maxnum):
     #   defeat the goal of providing practice at loops within loops.
     # ------------------------------------------------------------------
     for f in range(r):
-        for k in range(r - (r - f)):
-            for j in range(maxnum - (maxnum - k)):
-                print(k + 1, end= '')
-                print(' ', end='')
+        for k in range(maxnum + 1):
+            for j in range(maxnum - maxnum + k):
 
-        print()
+                print(k, end='')
+
+        print(' ', end='')
+
+    print()
 
 
 
