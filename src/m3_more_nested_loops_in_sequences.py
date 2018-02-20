@@ -79,17 +79,19 @@ def largest_number(seq_seq):
     # DONE: 3. Implement and test this function.
     #   Note that you should write its TEST function first (above).
     # ------------------------------------------------------------------
-    first = [0]
-    for j in range(len(seq_seq)):
-        for k in range(len(seq_seq[j])):
+    first = None
+    for k in range(len(seq_seq)):
+        for j in range(len(seq_seq[k])):
 
-            if first[0] > seq_seq[j][k]:
-                highest = first
+            if first == None:
+                first = seq_seq[k][j]
 
-            if seq_seq[j][k] > first[0]:
-                highest = seq_seq[j][k]
+            else:
+                if seq_seq[k][j] > first:
+                    first = seq_seq[k][j]
 
-    return highest
+
+    return first
 
 def run_test_largest_negative_number():
     """ Tests the    largest_negative_number    function. """
@@ -105,6 +107,20 @@ def run_test_largest_negative_number():
     print('Testing the   LARGEST_NEGATIVE_NUMBER   function:')
     print('-------------------------------------------------')
 
+    # Test 1:
+    expected = -33
+    answer = largest_number(([0, 23, -33], [5, -30], [0, 2, 4, 5, 6]))
+    print('Expected and actual are:', expected, answer)
+
+    # Test 2:
+    expected = -64
+    answer = largest_number(([-22, -33, 63], [0, 6], [1, 2, -64, 5, 6]))
+    print('Expected and actual are:', expected, answer)
+
+    # Test 3:
+    expected = -18
+    answer = largest_number(([-18, -17, -16], [5, 6], [0, 2, 4, 6, 8]))
+    print('Expected and actual are:', expected, answer)
 
 def largest_negative_number(seq_seq):
     """
@@ -129,14 +145,27 @@ def largest_negative_number(seq_seq):
     where each subsequence contains only numbers.
     """
     # ------------------------------------------------------------------
-    # TODO: 5. Implement and test this function.
+    # DONE: 5. Implement and test this function.
     #   Note that you should write its TEST function first (above).
     #
     # CHALLENGE: Try to solve this problem with no additional sequences
     #   being constructed (so the SPACE allowed is limited to the
     #   give sequence of sequences plus any non-list variables you want).
     # ------------------------------------------------------------------
+    max = 0
+    for k in range(len(seq_seq)):
+        for j in range(len(seq_seq[k])):
+            if seq_seq[k][j] < 0:
+                if neg == 0:
+                    max = seq_seq[k][j]
 
+                if abs(seq_seq[k][j]) < abs(max):
+                    max = seq_seq[k][j]
+
+    if max == 0:
+        return None
+
+    return max
 
 def run_test_first_is_elsewhere_too():
     """ Tests the    first_is_elsewhere_too    function. """
@@ -167,9 +196,7 @@ def run_test_first_is_elsewhere_too():
 
     # Test 2:
     expected = False
-    answer = first_is_elsewhere_too([(3, 1, 4),
-                                     (13, 10, 11, 7, 10),
-                                     [11, 2, 13, 14]])
+    answer = first_is_elsewhere_too([(3, 1, 4), (13, 10, 11, 7, 10), [11, 2, 13, 14]])
     print('Expected and actual are:', expected, answer)
     print(message[answer == expected])
     no_failures = no_failures and (answer == expected)
@@ -369,7 +396,7 @@ def first_is_elsewhere_too(seq_seq):
     and the given argument is a sequence of sequences.
     """
     # ------------------------------------------------------------------
-    # TODO: 6. Implement and test this function.
+    # DONE: 6. Implement and test this function.
     #          Some tests are already written for you (above).
     #
     # IMPLEMENTATION RESTRICTION:
@@ -384,7 +411,13 @@ def first_is_elsewhere_too(seq_seq):
     #   in this problem, as doing so would defeat the goal of providing
     #   practice at loops within loops (within loops within ...)
     # ------------------------------------------------------------------
+    for k in range(1, len(seq_seq)):
+        for s in range(len(seq_seq[0])):
+            for j in range(len(seq_seq[k])):
+                if seq_seq[0][s] == seq_seq[k][j]:
+                    return True
 
+    return False
 
 # ----------------------------------------------------------------------
 # Calls  main  to start the ball rolling.
